@@ -7,7 +7,7 @@ let camera: Camera
 const TakePhotoScreen = ({ navigation }) => {
   const [startCamera, setStartCamera] = React.useState(false)
   const [previewVisible, setPreviewVisible] = React.useState(false)
-  const [capturedImage, setCapturedImage] = React.useState<any>(null)
+  const [capturedImage, setCapturedImage] = React.useState(null)
   const [cameraType, setCameraType] = React.useState(Camera.Constants.Type.back)
   const [flashMode, setFlashMode] = React.useState('off')
 
