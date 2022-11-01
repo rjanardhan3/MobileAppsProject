@@ -4,22 +4,24 @@ import React, {useState} from 'react';
 const HomeScreen = ({ navigation }) => {
 
   <View style={styles.container}>
-    <StatusBar style="auto" />
-    <View style={styles.standardBtn}>
-      <Text style>Get Current Recipes</Text>
-    </View>
-    <View style={styles.standardBtn}>
-      <Text style>Take picture of Fridge</Text>
-    </View>
-    <View style={styles.standardBtn}>
-      <Text style>Favorite Recipes</Text>
-    </View>
-    <TouchableOpacity
-      style={styles.standardBtn}
-      onPress={() => navigation.navigate("Login")}}
-    >
-      <Text>Go Back to Login</Text>
-    </TouchableOpacity>
+      <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Get Current Recipes</Text>
+      <TouchableOpacity style={styles.standardBtn}>
+        <Text style={{ color: "#E1E2EF"}}>Get Current Recipes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.standardBtn}>
+        <Text style={{ color: "#E1E2EF"}}>Take picture of Fridge</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.standardBtn}>
+        <Text style={{ color: "#E1E2EF"}}>Get List of Ingredients</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.standardBtn}>
+        <Text style={{ color: "#E1E2EF"}}>Favorite Recipes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginBtn}
+      >
+        <Text style={{ color: "#05204A"}}>Go Back to Login</Text>
+      </TouchableOpacity>
   </View>
 
 }
@@ -60,6 +62,15 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     marginTop:40,
-    backgroundColor:"#FF1493",
+    backgroundColor:"#05204A",
+  },
+  loginBtn:
+  {
+    width:"80%",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
   }
 });
