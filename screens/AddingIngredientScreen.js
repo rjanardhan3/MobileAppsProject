@@ -123,6 +123,15 @@ const AddingIngredientScreen = ({ navigation }) => {
               setTodo(temp);
             }}
           />
+          <Button
+            style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}
+            title="View Recipes"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+            onPress={() => {
+              navigation.navigate("RecipeMenu");
+            }}
+          />
         </View>
         <Text></Text>
         <Text></Text>

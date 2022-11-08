@@ -10,6 +10,7 @@ const RecipeMenu = ({navigation}) => {
     //console.log("Recipe data " + JSON.stringify(RecipeData))
     const onPressBack = () => {
         console.log("Pressed back button")
+        navigation.navigate("AddingIngredientScreen");
     }
     const onPressMenu = () => {
         console.log("Pressed menu button")

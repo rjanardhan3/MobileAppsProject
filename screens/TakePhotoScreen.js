@@ -27,7 +27,7 @@ const TakePhotoScreen = ({ navigation }) => {
     //setStartCamera(false)
     setCapturedImage(photo)
   }
-  const __savePhoto = () => {}
+  const __savePhoto = () => {navigation.navigate("AddingIngredientScreen")}
   const __retakePicture = () => {
     setCapturedImage(null)
     setPreviewVisible(false)
