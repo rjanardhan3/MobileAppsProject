@@ -14,6 +14,7 @@ const RecipeMenu = ({navigation}) => {
     }
     const onPressMenu = () => {
         console.log("Pressed menu button")
+        navigation.navigate("Home");
     }
     //console.log("recipe Data " +JSON.stringify(RecipeData))
     const recipeData = RecipeData.body.recipes

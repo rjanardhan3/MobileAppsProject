@@ -8,7 +8,8 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Get Current Recipes</Text>
         <TouchableOpacity
-          style={styles.standardBtn} >
+          style={styles.standardBtn}
+          onPress={() => navigation.navigate('RecipeMenu')} >
           <Text style={{ color: "#E1E2EF"}}>Get Current Recipes</Text>
           </TouchableOpacity>
         <TouchableOpacity
