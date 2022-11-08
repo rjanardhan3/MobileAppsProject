@@ -192,7 +192,7 @@ const TakePhotoScreen = ({ navigation }) => {
       <StatusBar style="auto" />
     </View>
   )
-}
+};
 
 export default TakePhotoScreen;
 

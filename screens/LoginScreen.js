@@ -9,7 +9,6 @@ signInWithEmailAndPassword,
 createUserWithEmailAndPassword,
 sendPasswordResetEmail,
 signOut,
-createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 import {
@@ -48,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
   const [pass, setPass] = useState('');
 
   var isLogin = true
-  var loginWithGoogle = true
+  var loginWithGoogle = false
 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
@@ -67,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
     }
   }
 
-  createUserWithEmailAndPassword(auth, email, password)
+  createUserWithEmailAndPassword(auth, email, pass)
     .then((userCredential) => {
       const user = userCredential.user;
     })
@@ -98,18 +97,18 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const logInWithEmailAndPassword = async (email, password) => {
+  const logInWithEmailAndPassword = async (email, pass) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, pass);
     } catch (err) {
       console.error(err);
       alert("Invalid email or password. Please try again!");
     }
   };
 
-  const registerWithEmailAndPassword = async (name, email, password) => {
+  const registerWithEmailAndPassword = async (name, email, pass) => {
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, pass);
       const user = res.user;
       await addDoc(collection(db, "users"), {
         uid: user.uid,
@@ -148,10 +147,6 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
       <StatusBar style="auto" />
-      <View style padding={10}>
-        <Image source={logo} style={{ width: 105, height: 209 }} />
-      </View>
-
       <View style={styles.inputView}>
         <TextInput
           styles={styles.TextInput}
@@ -181,14 +176,14 @@ const LoginScreen = ({ navigation }) => {
         >
         <Text style={styles.loginText}>Login!</Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity style={styles.forgot_button}>
         <Text style={styles.forgot_button}>Register for an Account</Text>
       </TouchableOpacity>
     </View>
   );
 
-}
+};
 
 export default LoginScreen;
 

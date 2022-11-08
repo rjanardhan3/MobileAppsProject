@@ -129,9 +129,9 @@ const AddingIngredientScreen = ({ navigation }) => {
 
       </View>
     );
-}
+};
 
-export AddingIngredientScreen;
+export default AddingIngredientScreen;
 
 const styles = StyleSheet.create({
   container: {
