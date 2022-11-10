@@ -19,6 +19,7 @@ const RecipeInstructions = ({ navigation, route }) => {
   };
   const onPressMenu = () => {
     console.log("Pressed menu button");
+    navigation.navigate("Home");
   };
   const recipeData = route.params.recipeData;
 
