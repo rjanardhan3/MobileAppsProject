@@ -4,10 +4,8 @@ import { Dimensions } from "react-native";
 import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants/theme";
 
 const RecipeCard = ({ data, navigation }) => {
-  //console.log("data " + JSON.stringify(data))
   const imgUrl = data.image;
   onPressCard = () => {
-    console.log("pressed card")
     navigation.navigate('RecipeInstructions', { recipeData: data })
   }
   return (

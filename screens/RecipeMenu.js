@@ -18,6 +18,7 @@ const RecipeMenu = ({navigation}) => {
     }
     //console.log("recipe Data " +JSON.stringify(RecipeData))
     const recipeData = RecipeData.body.recipes
+    //console.log("recipe Data " + JSON.stringify(recipeData))
     return (
 
         <SafeAreaView style={styles.container}>
@@ -37,7 +38,7 @@ const RecipeMenu = ({navigation}) => {
                 renderItem={({item}) =>  <RecipeCard data={item} navigation={navigation}/>}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
-          />
+            />
         </SafeAreaView>
     )
 }
