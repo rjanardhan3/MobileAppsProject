@@ -21,32 +21,32 @@ const AddingIngredientScreen = ({ navigation }) => {
     },
     {
       "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
+      "id": 3,
+      "title": "Mango",
       "completed": false,
     },
     {
       "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
+      "id": 4,
+      "title": "Orange",
       "completed": false,
     },
     {
       "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
+      "id": 5,
+      "title": "Lettuce",
       "completed": false,
     },
     {
       "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
+      "id": 6,
+      "title": "Pepper",
       "completed": false,
     },
     {
       "userId": 1,
-      "id": 10,
-      "title": "Broccoli",
+      "id": 7,
+      "title": "Tomato",
       "completed": true,
     }])
     const Item = ({ title }) => (
