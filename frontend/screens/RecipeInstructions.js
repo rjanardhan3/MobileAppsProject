@@ -14,14 +14,15 @@ import ReactHtmlParser from "html-react-parser";
 import RecipeInstructionCard from "../components/RecipeInstructionCard";
 
 const RecipeInstructions = ({ navigation, route }) => {
+  const recipeData = route.params.oneRecipe;
+  const allRecipes = route.params.allRecipes
   const onPressBack = () => {
-    navigation.navigate("RecipeMenu");
+    navigation.navigate("RecipeMenu", {allRecipeData:allRecipes});
   };
   const onPressMenu = () => {
     console.log("Pressed menu button");
     navigation.navigate("Home");
   };
-  const recipeData = route.params.recipeData;
 
 
   const displayedRecipeData = Object.keys(recipeData)

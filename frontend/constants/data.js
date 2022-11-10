@@ -178,4 +178,7 @@ const RecipeData = {
   }
 };
 
+var LastRecipeQuery = []
+
 export { RecipeData };
+export {LastRecipeQuery};

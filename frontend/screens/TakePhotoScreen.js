@@ -206,7 +206,6 @@ const styles = StyleSheet.create({
 })
 
 const CameraPreview = ({photo, retakePicture, savePhoto}: any) => {
-  console.log('sdsfds', photo)
   return (
     <View
       style={{

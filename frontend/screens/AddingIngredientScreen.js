@@ -1,54 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState,useReducer } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import uuid from 'react-native-uuid';
+import { COLORS } from '../constants/theme';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {LastRecipeQuery} from '../constants/data';
 
 const AddingIngredientScreen = ({ navigation }) => {
   const [value, onChangeText] = React.useState('');
   const renderItem = ({ item }) => (
     <Item title={item.title} />
   );
-
-  const [todos, setTodo] = useState([{
-      "userId": 1,
-      "id": 1,
-      "title": "Apples",
-      "completed": false,
+  const getRecipeBaseUrl = "https://mobileappsproject.onrender.com/recipes?ingredients="
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+  const [ingredients, setIngredients] = useState([{
+      "id": uuid.v4(),
+      "title": 'Tofu',
     },
     {
-      "userId": 1,
-      "id": 2,
-      "title": "Potatos",
-      "completed": false,
+      "id": uuid.v4(),
+      "title": 'Onions',
     },
     {
-      "userId": 1,
-      "id": 3,
-      "title": "Mango",
-      "completed": false,
-    },
-    {
-      "userId": 1,
-      "id": 4,
-      "title": "Orange",
-      "completed": false,
-    },
-    {
-      "userId": 1,
-      "id": 5,
-      "title": "Lettuce",
-      "completed": false,
-    },
-    {
-      "userId": 1,
-      "id": 6,
-      "title": "Pepper",
-      "completed": false,
-    },
-    {
-      "userId": 1,
-      "id": 7,
+      "id": uuid.v4(),
       "title": "Tomato",
-      "completed": true,
-    }])
+    },
+    {
+      "id": uuid.v4(),
+      "title": "Red peppers",
+    },
+    ])
     const Item = ({ title }) => (
       <View>
         <TouchableOpacity>
@@ -57,19 +38,19 @@ const AddingIngredientScreen = ({ navigation }) => {
         <Button
           style={{ color: "#05204A", fontSize: 250, fontFamily: 'Cochin'}}
           title="Delete Ingredient"
-          color="#841584"
+          color= "white"
           accessibilityLabel="Learn more about this purple button"
           onPress={() => {
             var temp = [];
 
-            for (var i = 0; i < todos.length; i ++) {
-              if (todos[i].title != title) {
-                temp.push(todos[i]);
+            for (var i = 0; i < ingredients.length; i ++) {
+              if (ingredients[i].title != title) {
+                temp.push(ingredients[i]);
               }
             }
 
             //setValue("asdfadsf");
-            setTodo(temp);
+            setIngredients(temp);
           }}
         />
       </View>
@@ -81,26 +62,26 @@ const AddingIngredientScreen = ({ navigation }) => {
         <Text></Text>
         <Text></Text>
         <Text></Text>
-        <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Ingredients Found</Text>
-        <FlatList
-            data={todos}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-        />
-        <View>
-          <TextInput
+        <Text style={{ color: COLORS.white, fontSize: 25, fontFamily: 'Cochin'}}>Ingredients Found</Text>
+        <TextInput
             style={styles.input}
             onChangeText={text => onChangeText(text)}
             placeholder = {"Type here to add ingredients!"}
             value = {value}
           />
+        <FlatList
+            data={ingredients}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+        />
+        <View>
           <Button
-            style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}
+            style={{fontSize: 25, fontFamily: 'Cochin'}}
             title="Add Ingredient to List"
-            color="#841584"
+            color= "white"
             accessibilityLabel="Learn more about this purple button"
             onPress={() => {
-              var temp = todos;
+              var temp = ingredients;
               var gone = false;
               if (value.trim().length == 0) {
                 alert("Please insert an ingredient and not an empty item");
@@ -114,22 +95,32 @@ const AddingIngredientScreen = ({ navigation }) => {
                 }
               }
               temp.push({
-                "userId": 1,
-                "id": 19,
+                "id": uuid.v4(),
                 "title": value,
-                "completed": false,
               });
-              //setValue("asdfadsf");
-              setTodo(temp);
+              forceUpdate();
+              setIngredients(temp);
             }}
           />
           <Button
             style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}
             title="View Recipes"
-            color="#841584"
+            color= "white"
             accessibilityLabel="Learn more about this purple button"
             onPress={() => {
-              navigation.navigate("RecipeMenu");
+              var ingredientsStr = ingredients.map((ingredient) => {
+                return ingredient.title;
+              })
+              .join(",+");
+              //console.log("ingredients " + ingredientsStr)
+              const getRecipeUrl = getRecipeBaseUrl + ingredientsStr
+              //console.log("get recipe " + getRecipeUrl)
+              axios.get(getRecipeUrl).then((res) => {
+                //console.log("LastRecipe Query " + res.data.body.recipes)
+                navigation.navigate("RecipeMenu", {allRecipeData: res.data.body.recipes});
+              }).catch((error) => {
+                console.log("error " + error );
+              })
             }}
           />
         </View>
@@ -145,21 +136,23 @@ export default AddingIngredientScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.teal,
     alignItems: 'center',
     justifyContent: 'center',
   },
   todo: {
     margin: 10,
-    backgroundColor: 'deeppink',
-    color: 'white',
+    backgroundColor: 'white',
+    color: 'teal',
     fontSize: 10,
-    padding: 10
+    padding: 10,
+    textAlign: 'center'
   },
   input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    color:COLORS.white
   }
 });
