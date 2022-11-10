@@ -3,12 +3,10 @@ import React from "react";
 import { Dimensions } from "react-native";
 import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants/theme";
 
-const RecipeCard = ({ data, navigation }) => {
-  //console.log("data " + JSON.stringify(data))
-  const imgUrl = data.image;
+const RecipeCard = ({ oneRecipe, navigation, allRecipes }) => {
+  const imgUrl = oneRecipe.image;
   onPressCard = () => {
-    console.log("pressed card")
-    navigation.navigate('RecipeInstructions', { recipeData: data })
+    navigation.navigate('RecipeInstructions', { oneRecipe: oneRecipe, allRecipes: allRecipes })
   }
   return (
     <TouchableOpacity
@@ -29,8 +27,8 @@ const RecipeCard = ({ data, navigation }) => {
                 flexShrink:1,
                 flexWrap:'wrap'
               }}>
-              {data.title + "\n" + "Cooking Time: " + data.readyInMinutes + " min"
-              + "\n" + "Health Points: " + data.healthScore + "\n"}
+              {oneRecipe.title + "\n" + "Cooking Time: " + oneRecipe.readyInMinutes + " min"
+              + "\n" + "Health Points: " + oneRecipe.healthScore + "\n"}
             </Text>
 
       </View>

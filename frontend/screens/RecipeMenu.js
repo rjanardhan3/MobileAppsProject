@@ -3,10 +3,11 @@ import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants/theme";
 import {View, SafeAreaView, FlatList,Text, StyleSheet,TouchableOpacity} from 'react-native';
 import RecipeCard from '../components/RecipeCard';
 import {RecipeData} from '../constants/data';
+import {LastRecipeQuery} from '../constants/data';
 import { Dimensions } from "react-native";
 
 
-const RecipeMenu = ({navigation}) => {
+const RecipeMenu = ({navigation, route}) => {
     //console.log("Recipe data " + JSON.stringify(RecipeData))
     const onPressBack = () => {
         console.log("Pressed back button")
@@ -16,8 +17,7 @@ const RecipeMenu = ({navigation}) => {
         console.log("Pressed menu button")
         navigation.navigate("Home");
     }
-    //console.log("recipe Data " +JSON.stringify(RecipeData))
-    const recipeData = RecipeData.body.recipes
+    const allRecipeData = route.params.allRecipeData
     return (
 
         <SafeAreaView style={styles.container}>
@@ -33,11 +33,11 @@ const RecipeMenu = ({navigation}) => {
             </View>
 
             <FlatList
-                data={recipeData}
-                renderItem={({item}) =>  <RecipeCard data={item} navigation={navigation}/>}
+                data={allRecipeData}
+                renderItem={({item}) =>  <RecipeCard oneRecipe={item} navigation={navigation} allRecipes={allRecipeData}/>}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
-          />
+            />
         </SafeAreaView>
     )
 }

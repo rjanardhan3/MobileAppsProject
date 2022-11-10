@@ -14,17 +14,17 @@ const IngredientListScreen = ({ navigation }) => {
       "title": "Bellpepper",
     },
     {
-      "userId": 1,
+      "userId": 2,
       "ingredientId": 8,
       "title": "Jalapeno",
     },
     {
-      "userId": 1,
+      "userId": 3,
       "ingredientId": 9,
       "title": "Lettuce",
     },
     {
-      "userId": 1,
+      "userId": 4,
       "ingredientId": 10,
       "title": "Apricot",
     }])
@@ -49,7 +49,7 @@ const IngredientListScreen = ({ navigation }) => {
         <FlatList
             data={todos}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.userId}
         />
         <Text></Text>
         <Text></Text>
