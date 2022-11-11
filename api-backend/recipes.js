@@ -3,6 +3,7 @@ const https = require('https');
 
 let num_recipes = 5;
 let ignore_pantry = true;
+let ranking = 2; //2 = minimize unused ingredients
 
 
 function get_recipe_id(ingredients, callback) {
@@ -10,7 +11,7 @@ function get_recipe_id(ingredients, callback) {
     path += "ingredients=" + get_query_string_list(ingredients)
     path += "&number=" + num_recipes;
     path += "&ignorePantry=" + ignore_pantry;
-    path += "&ranking=2"; //2 = minimize unused ingredients
+    path += "&ranking=" + ranking; 
 
     const options = {
         "method": "GET",
@@ -76,26 +77,28 @@ function get_recipe_instructions(recipe_ids, callback) {
     req.end();
 }
 
-function get_query_string_list(ingredients) {
-    let ingredients_list = ingredients.split(",");
-    let query_ingredient_string = "";
-    for (var i = 0; i < ingredients_list.length; i++) {
-
-        if (i == 0) {
-            query_ingredient_string += ingredients_list[i].trim();
-        } else {
-            query_ingredient_string += ",+" + ingredients_list[i].trim();
-        }
-    }
-    return query_ingredient_string;
-}
-
 function grab_recipe_ids_from_data(recipe_data) {
     let recipe_list = [];
     for (var i = 0; i < recipe_data.length; i++) {
         recipe_list.push(recipe_data[i].id);
     }
     return recipe_list;
+}
+
+function get_query_string_list(ingredients) {
+    let ingredients_list = ingredients.split(",");
+    let query_ingredient_string = "";
+    for (var i = 0; i < ingredients_list.length; i++) {
+        let ingredient = ingredients_list[i].trim();
+        ingredient = ingredient.replace(/ /g, "%20");
+        if (i == 0) {
+            query_ingredient_string += ingredient;
+        } else {
+            query_ingredient_string += ",+" + ingredient;
+        }
+    }
+
+    return query_ingredient_string;
 }
 
 
