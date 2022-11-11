@@ -3,71 +3,78 @@ const https = require('https');
 
 let num_recipes = 5;
 let ignore_pantry = true;
+let ranking = 2; //2 = minimize unused ingredients
 
 
 function get_recipe_id(ingredients, callback) {
-    url = "https://api.spoonacular.com/recipes/findByIngredients?"
-    url += "ingredients=" + get_query_string_list(ingredients)
-    url += "&number=" + num_recipes;
-    url += "&ignorePantry=" + ignore_pantry;
-    url += "&ranking=2"; //2 = minimize unused ingredients
-    url += "&apiKey=" + process.env.SPOONACULAR_API_KEY;
+    let path = "/recipes/findByIngredients?";
+    path += "ingredients=" + get_query_string_list(ingredients)
+    path += "&number=" + num_recipes;
+    path += "&ignorePantry=" + ignore_pantry;
+    path += "&ranking=" + ranking; 
+
+    const options = {
+        "method": "GET",
+        "hostname": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "port": null,
+        "path": path,
+        "headers": {
+            "X-RapidAPI-Key": process.env.SPOONACULAR_API_KEY,
+            "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+            "useQueryString": true
+        }
+    };
+
+    const req = https.request(options, function (res) {
+        const chunks = [];
     
-    https.get(url, (resp) => {
-        let data = '';
-
-        // A chunk of data has been received.
-        resp.on('data', (chunk) => {
-            data += chunk;
+        res.on("data", function (chunk) {
+            chunks.push(chunk);
         });
+    
+        res.on("end", function () {
+            const body = Buffer.concat(chunks);
 
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            const recipe_data = JSON.parse(data);
+            const recipe_data = JSON.parse(body.toString());
             callback(recipe_data)
         });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
     });
+    
+    req.end();
 }
 
 function get_recipe_instructions(recipe_ids, callback) {
-    url = "https://api.spoonacular.com/recipes/informationBulk?ids=";
-    url += recipe_ids.join(",");
-    url += "&apiKey=" + process.env.SPOONACULAR_API_KEY;
+    let path = "/recipes/informationBulk?ids=";
+    path += recipe_ids.join(",");
 
-    https.get(url, (resp) => {
-        let data = '';
+    const options = {
+        "method": "GET",
+        "hostname": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "port": null,
+        "path": path,
+        "headers": {
+            "X-RapidAPI-Key": process.env.SPOONACULAR_API_KEY,
+            "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+            "useQueryString": true
+        }
+    };
 
-        // A chunk of data has been received.
-        resp.on('data', (chunk) => {
-            data += chunk;
+    const req = https.request(options, function (res) {
+        const chunks = [];
+    
+        res.on("data", function (chunk) {
+            chunks.push(chunk);
         });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            const recipe_instructions = JSON.parse(data);
+    
+        res.on("end", function () {
+            const body = Buffer.concat(chunks);
+            
+            const recipe_instructions = JSON.parse(body.toString());
             callback(recipe_instructions)
         });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
     });
-}
-
-function get_query_string_list(ingredients) {
-    let ingredients_list = ingredients.split(",");
-    let query_ingredient_string = "";
-    for (var i = 0; i < ingredients_list.length; i++) {
-
-        if (i == 0) {
-            query_ingredient_string += ingredients_list[i].trim();
-        } else {
-            query_ingredient_string += ",+" + ingredients_list[i].trim();
-        }
-    }
-    return query_ingredient_string;
+    
+    req.end();
 }
 
 function grab_recipe_ids_from_data(recipe_data) {
@@ -78,8 +85,28 @@ function grab_recipe_ids_from_data(recipe_data) {
     return recipe_list;
 }
 
+function get_query_string_list(ingredients) {
+    let ingredients_list = ingredients.split(",");
+    let query_ingredient_string = "";
+    for (var i = 0; i < ingredients_list.length; i++) {
+        let ingredient = ingredients_list[i].trim();
+        ingredient = ingredient.replace(/ /g, "%20");
+        if (i == 0) {
+            query_ingredient_string += ingredient;
+        } else {
+            query_ingredient_string += ",+" + ingredient;
+        }
+    }
+
+    return query_ingredient_string;
+}
+
 
 function format_instructions(instructions) {
+    if (instructions == null || instructions.length == 0) {
+        return "No instructions available for this recipe";
+    }
+
     instructions = instructions.split(/<\S{0,}>/).join('\n').split('\n')
     for (var i = 0; i < instructions.length; i++) {
         if (instructions[i].trim().length == 0) {
@@ -90,8 +117,6 @@ function format_instructions(instructions) {
     return instructions;
 }
 
-
-//Cut the bottom off the onion and save for stock\n\nPeel off the papery skin and scoop out the top\n\nFill the scooped-out part with butter and bouillon/soy/Worcestershire\n\nWrap in aluminum foil\n\nBake at 350°F for about 60 minutes or until fork tender\n\nRemove from the oven and serve by itself or as a side dish
 function make_recipe_data_json(recipe_information, recipe_instructions) {
     let recipe_data_list = []
 

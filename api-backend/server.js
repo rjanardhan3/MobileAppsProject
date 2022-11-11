@@ -18,7 +18,16 @@ const sageMakerRuntime = new AWS.SageMakerRuntime({
 });
 
 app.get('/recipes', (req, res) => {
-    ingredient_list = req.query.ingredients
+    ingredient_list = req.query.ingredients;
+    api_key = req.query.api_key;
+
+    if (api_key != process.env.API_KEY) {
+        res.status(403).send({
+            body: {
+                response: "Invalid API Key."
+            }
+        })
+    }
 
     if (ingredient_list == undefined || Object.keys(ingredient_list).length === 0) {
         res.status(400).send({
