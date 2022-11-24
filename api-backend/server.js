@@ -97,13 +97,19 @@ MongoClient.connect(connectionString, {
 
     app.post('/add-recipe', (req, res) => {
         const received_request = req.body;
+        received_request.id = 1000000 + Math.floor(Math.random() * 9000000);        //Generate 7-digit ID
+
         recipesCollection.insertOne(received_request)
             .then(result => {
                 res.status(200).send({
                     response: "Recipe has been successfully added."
                 })
             })
-            .catch(error => console.error(error))
+            .catch(error => 
+                res.status(400).send({
+                    response: "Recipe was unable to be added. This is likely because the recipe has a duplicate id. Resubmit and try again"
+                })
+            )
     })
 
     app.delete("/delete-recipes", (req, res) => {
