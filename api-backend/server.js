@@ -51,6 +51,11 @@ MongoClient.connect(connectionString, {
                     get_recipe_instructions(recipe_ids, function(recipe_instructions) {
                         if (recipe_instructions.length == 0) {
                             recipe_response = "No recipe instructions have been found for the given recipe.";
+                            res.status(400).send({
+                                body: {
+                                    response: recipe_response,
+                                }
+                            })
                         } else {
                             recipe_data_list = make_recipe_data_json(recipe_information_list, recipe_instructions);
                             recipesCollection.insertMany(recipe_data_list)
@@ -66,7 +71,8 @@ MongoClient.connect(connectionString, {
                                     console.error(error)
                                     res.status(400).send({
                                         body: {
-                                            response: "Recipe instructions were unable to be added to the database."
+                                            response: "Recipe instructions were unable to be added to the database. This may be because some recipes are duplicates and already in the database.",
+                                            recipes: recipe_data_list
                                         }
                                     })
                                 })   
