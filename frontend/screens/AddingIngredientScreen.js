@@ -5,6 +5,7 @@ import uuid from 'react-native-uuid';
 import { COLORS } from '../constants/theme';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import {LastRecipeQuery} from '../constants/data';
+import {API_KEY} from '@env'
 
 const AddingIngredientScreen = ({ navigation }) => {
   const [value, onChangeText] = React.useState('');
@@ -12,6 +13,7 @@ const AddingIngredientScreen = ({ navigation }) => {
     <Item title={item.title} />
   );
   const getRecipeBaseUrl = "https://mobileappsproject.onrender.com/recipes?ingredients="
+  const apiKeyStr = "&api_key=" + API_KEY
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
   const [ingredients, setIngredients] = useState([{
       "id": uuid.v4(),
@@ -30,6 +32,7 @@ const AddingIngredientScreen = ({ navigation }) => {
       "title": "Red peppers",
     },
     ])
+
     const Item = ({ title }) => (
       <View>
         <TouchableOpacity>
@@ -109,17 +112,26 @@ const AddingIngredientScreen = ({ navigation }) => {
             accessibilityLabel="Learn more about this purple button"
             onPress={() => {
               var ingredientsStr = ingredients.map((ingredient) => {
-                return ingredient.title;
+                ingredientWordList = ingredient.title.split(" ")
+                outputStr = ""
+                if (ingredientWordList.length > 1) {
+                  for (let index = 0; index < ingredientWordList.length; index++) {
+                    outputStr += ingredientWordList[index].charAt(0).toLowerCase() + ingredientWordList[index].slice(1)
+                    if (index != ingredientWordList.length - 1) {
+                      outputStr += "%20"
+                    }
+                  }
+                } else {
+                  outputStr = ingredient.title.charAt(0).toLowerCase() + ingredient.title.slice(1);
+                }
+                return outputStr
               })
               .join(",+");
-              //console.log("ingredients " + ingredientsStr)
-              const getRecipeUrl = getRecipeBaseUrl + ingredientsStr
-              //console.log("get recipe " + getRecipeUrl)
+              const getRecipeUrl = getRecipeBaseUrl + ingredientsStr + apiKeyStr
               axios.get(getRecipeUrl).then((res) => {
-                //console.log("LastRecipe Query " + res.data.body.recipes)
                 navigation.navigate("RecipeMenu", {allRecipeData: res.data.body.recipes});
               }).catch((error) => {
-                console.log("error " + error );
+                console.log("error " + JSON.stringify(error.response.data));
               })
             }}
           />

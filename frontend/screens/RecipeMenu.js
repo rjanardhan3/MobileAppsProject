@@ -8,7 +8,6 @@ import { Dimensions } from "react-native";
 
 
 const RecipeMenu = ({navigation, route}) => {
-    //console.log("Recipe data " + JSON.stringify(RecipeData))
     const onPressBack = () => {
         console.log("Pressed back button")
         navigation.navigate("AddingIngredientScreen");
