@@ -24,14 +24,8 @@ MongoClient.connect(connectionString, {
 
     app.get('/recipes', (req, res) => {
         ingredient_list = req.query.ingredients;
-        api_key = req.query.api_key;
-
-        if (api_key != process.env.API_KEY) {
-            res.status(403).send({
-                body: {
-                    response: "Invalid API Key."
-                }
-            })
+        if (!check_api_key(req, res)) {
+            return;
         }
 
         if (ingredient_list == undefined || Object.keys(ingredient_list).length === 0) {
@@ -58,24 +52,12 @@ MongoClient.connect(connectionString, {
                             })
                         } else {
                             recipe_data_list = make_recipe_data_json(recipe_information_list, recipe_instructions);
-                            recipesCollection.insertMany(recipe_data_list)
-                                .then(result => {
-                                    res.status(200).send({
-                                        body: {
-                                            response: recipe_response,
-                                            recipes: recipe_data_list
-                                        }
-                                    })
-                                })
-                                .catch(error => {
-                                    console.error(error)
-                                    res.status(400).send({
-                                        body: {
-                                            response: "Recipe instructions were unable to be added to the database. This may be because some recipes are duplicates and already in the database.",
-                                            recipes: recipe_data_list
-                                        }
-                                    })
-                                })   
+                                res.status(200).send({
+                                    body: {
+                                        response: recipe_response,
+                                        recipes: recipe_data_list
+                                    }
+                                })  
                         }
                     })
                 }
@@ -83,7 +65,10 @@ MongoClient.connect(connectionString, {
         }
     })
 
-    app.get('/previous-recipes', (req, res) => {
+    app.get('/saved-recipes', (req, res) => {
+        if (!check_api_key(req, res)) {
+            return;
+        }
         const cursor = recipesCollection.find().toArray()
             .then(results => {
                 res.status(200).send({
@@ -96,6 +81,9 @@ MongoClient.connect(connectionString, {
     })
 
     app.post('/add-recipe', (req, res) => {
+        if (!check_api_key(req, res)) {
+            return;
+        }
         const received_request = req.body;
         received_request.id = 1000000 + Math.floor(Math.random() * 9000000);        //Generate 7-digit ID
 
@@ -107,12 +95,16 @@ MongoClient.connect(connectionString, {
             })
             .catch(error => 
                 res.status(400).send({
-                    response: "Recipe was unable to be added. This is likely because the recipe has a duplicate id. Resubmit and try again"
+                    response: "Recipe was unable to be added. This is likely because the recipe has a duplicate id. Try again!"
                 })
             )
     })
 
-    app.delete("/delete-recipes", (req, res) => {
+    app.delete("/saved-recipes", (req, res) => {
+        if (!check_api_key(req, res)) {
+            return;
+        }
+
         recipesCollection.deleteMany({})
             .then(result => {
               res.status(200).send({
@@ -131,3 +123,17 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.listen(process.env.PORT || 3000, function() {
     console.log('listening on 3000 in local or a PORT in Render')
 })
+
+function check_api_key(req, res) {
+    api_key = req.query.api_key;
+
+    if (api_key != process.env.API_KEY) {
+        res.status(403).send({
+            body: {
+                response: "Invalid API Key."
+            }
+        })
+        return false;
+    }
+    return true;
+}
