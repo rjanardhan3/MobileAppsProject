@@ -1,37 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
+import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants/theme";
+import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity, Image} from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
-
   return (
+
+      
       <View style={styles.container}>
-        <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Get Current Recipes</Text>
-        <TouchableOpacity
-          style={styles.standardBtn}
-          onPress={() => navigation.navigate('RecipeMenu')} >
-          <Text style={{ color: "#E1E2EF"}}>Get Current Recipes</Text>
-          </TouchableOpacity>
+        <Text style={{ color: "lightgray", fontSize: 25, fontFamily: 'Cochin', marginTop:10}}>RefrigASaver</Text>
+        <Image
+          style={styles.fridge}
+          source={require('../assets/MainFridge.png')}
+        />
         <TouchableOpacity
           style={styles.standardBtn}
           onPress={() => navigation.navigate('TakePhotoScreen')}>
-          <Text style={{ color: "#E1E2EF"}}>Take picture of Fridge</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.standardBtn}
-          onPress={() => navigation.navigate('IngredientListScreen')}>
-          <Text style={{ color: "#E1E2EF"}}>Get List of Ingredients</Text>
+          <Text style={{ color: "black"}}>Take a Picture</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.standardBtn}
           onPress={() => navigation.navigate('FavoriteRecipes')}>
-          <Text style={{ color: "#E1E2EF"}}>Favorite Recipes</Text>
+          <Text style={{ color: "black"}}>Favorite Recipes</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => navigation.navigate('LoginScreen')}
         >
-          <Text style={{ color: "#05204A"}}>Go Back to Login</Text>
+          <Text style={{ color: "lightgray"}}>Go Back to Login</Text>
         </TouchableOpacity>
 
       </View>
@@ -42,9 +38,16 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  fridge: {
+    width: "55%",
+    height: "40%",
+    marginTop: 10,
+    marginLeft:10,
+
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.teal,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -96,7 +99,9 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     marginTop:40,
-    backgroundColor:"#05204A",
+    backgroundColor:'lightgray',
+
+
   },
   loginBtn:
   {
@@ -108,3 +113,11 @@ const styles = StyleSheet.create({
     marginTop:40,
   }
 });
+
+/*
+        <TouchableOpacity
+          style={styles.standardBtn}
+          onPress={() => navigation.navigate('IngredientListScreen')}>
+          <Text style={{ color: "#E1E2EF"}}>Get List of Ingredients</Text>
+        </TouchableOpacity>
+*/

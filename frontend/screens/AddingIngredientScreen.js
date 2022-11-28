@@ -15,21 +15,10 @@ const AddingIngredientScreen = ({ navigation }) => {
   const getRecipeBaseUrl = "https://mobileappsproject.onrender.com/recipes?ingredients="
   const apiKeyStr = "&api_key=" + API_KEY
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
-  const [ingredients, setIngredients] = useState([{
-      "id": uuid.v4(),
-      "title": 'Tofu',
-    },
+  const [ingredients, setIngredients] = useState([
     {
       "id": uuid.v4(),
       "title": 'Onions',
-    },
-    {
-      "id": uuid.v4(),
-      "title": "Tomato",
-    },
-    {
-      "id": uuid.v4(),
-      "title": "Red peppers",
     },
     ])
 
