@@ -27,24 +27,6 @@ const AddingIngredientScreen = ({ navigation }) => {
     },
     {
       "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
-      "completed": false,
-    },
-    {
-      "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
-      "completed": false,
-    },
-    {
-      "userId": 1,
-      "id": 9,
-      "title": "Pineapple",
-      "completed": false,
-    },
-    {
-      "userId": 1,
       "id": 10,
       "title": "Broccoli",
       "completed": true,

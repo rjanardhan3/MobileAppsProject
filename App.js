@@ -12,6 +12,7 @@ import IngredientListScreen from './screens/IngredientListScreen';
 import TakePhotoScreen from './screens/TakePhotoScreen';
 import RecipeMenu from './screens/RecipeMenu';
 import RecipeInstructions from './screens/RecipeInstructions';
+import NewHome from './screens/NewHome';
 import { COLORS, SIZES, SHADOWS, FONTS, assets } from "./constants/theme";
 
 const Stack = createNativeStackNavigator();
@@ -29,7 +30,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="NewHome">
+        <Stack.Screen
+          name="NewHome"
+          component={NewHome}
+        />
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -64,7 +69,7 @@ export default function App() {
           component={RecipeInstructions}
           options={{ headerShown: false }}
         />
-        
+
       </Stack.Navigator>
     </NavigationContainer>
   );
