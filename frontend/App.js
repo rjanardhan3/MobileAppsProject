@@ -33,26 +33,32 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="IngredientListScreen"
           component={IngredientListScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="TakePhotoScreen"
           component={TakePhotoScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="FavoriteRecipes"
           component={FavoriteRecipes}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="AddingIngredientScreen"
           component={AddingIngredientScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="RecipeMenu"
