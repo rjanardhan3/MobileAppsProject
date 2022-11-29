@@ -12,8 +12,11 @@ import {
 } from "react-native";
 import ReactHtmlParser from "html-react-parser";
 import RecipeInstructionCard from "../components/RecipeInstructionCard";
+import axios from "axios";
+import {API_KEY} from '@env'
 
 const RecipeInstructions = ({ navigation, route }) => {
+  const savedRecipeUrl = "https://mobileappsproject.onrender.com/add-recipe?api_key=" + API_KEY;
   const recipeData = route.params.oneRecipe;
   const allRecipes = route.params.allRecipes
   const onPressBack = () => {
@@ -23,8 +26,16 @@ const RecipeInstructions = ({ navigation, route }) => {
     console.log("Pressed menu button");
     navigation.navigate("Home");
   };
+  const addToSavedRecipe = () => {
+    axios.post(savedRecipeUrl,recipeData).then(function (response) {
+      console.log("response ", response);
+    })
+    .catch(function (error) {
+      console.log("error ", error);
+    });
+  }
 
-
+  console.log("recipeData " + JSON.stringify(recipeData))
   const displayedRecipeData = Object.keys(recipeData)
     .filter((key) => {
       return (
@@ -57,10 +68,11 @@ const RecipeInstructions = ({ navigation, route }) => {
         <TouchableOpacity onPress={onPressBack} style={styles.button}>
           <Text style={styles.buttonBackText}> Back </Text>
         </TouchableOpacity>
-        <Text style={styles.healthScore}>
-          {" "}
-          Health Score: {recipeData.healthScore}{" "}
-        </Text>
+
+        <TouchableOpacity onPress={addToSavedRecipe} style={styles.button}>
+          <Text style={styles.savedRecipeText}> Save Recipe </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={onPressMenu} style={styles.button}>
           <Text style={styles.buttonMenuText}> Menu </Text>
         </TouchableOpacity>
@@ -75,6 +87,7 @@ const RecipeInstructions = ({ navigation, route }) => {
         keyExtractor={(item) => item.key}
         showsVerticalScrollIndicator={false}
       />
+      
     </SafeAreaView>
   );
 };
@@ -85,6 +98,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.teal,
+  },
+  savedRecipeText:{
+    color: COLORS.teal,
+    fontSize: SIZES.small,
+    alignSelf: 'left',
+    marginTop:5
   },
   horizView: {
     height: 75,
@@ -121,10 +140,11 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: COLORS.white,
-    padding: 17,
+    padding: 12,
     borderRadius: 20,
     width: 100,
     height: 50,
+    
   },
   buttonBackText: {
     color: COLORS.teal,

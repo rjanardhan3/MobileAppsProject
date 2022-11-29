@@ -33,6 +33,7 @@ const RecipeInstructionCard = ({ data }) => {
       })
       .join(", ");
   } else if (data.key == "Instructions") {
+    console.log("data.value " + data.value)
     value = data.value.map((instruction, index) => {
       if (instruction.length == 0) {
         return;

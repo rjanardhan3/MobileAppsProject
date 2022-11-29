@@ -5,7 +5,7 @@ import {Camera} from 'expo-camera'
 let camera: Camera
 
 const TakePhotoScreen = ({ navigation }) => {
-  const [startCamera, setStartCamera] = React.useState(false)
+  const [startCamera, setStartCamera] = React.useState(true)
   const [previewVisible, setPreviewVisible] = React.useState(false)
   const [capturedImage, setCapturedImage] = React.useState(null)
   const [cameraType, setCameraType] = React.useState(Camera.Constants.Type.back)

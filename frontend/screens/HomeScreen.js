@@ -2,8 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants/theme";
 import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity, Image} from 'react-native';
+import axios from "axios";
+import {API_KEY} from '@env'
 
 const HomeScreen = ({ navigation }) => {
+  const getSavedRecipeUrl = "https://mobileappsproject.onrender.com/saved-recipes?api_key=" + API_KEY;
   return (
 
       
@@ -18,11 +21,19 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('TakePhotoScreen')}>
           <Text style={{ color: "black"}}>Take a Picture</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.standardBtn}
-          onPress={() => navigation.navigate('FavoriteRecipes')}>
-          <Text style={{ color: "black"}}>Favorite Recipes</Text>
+          onPress={() => {
+            axios.get(getSavedRecipeUrl).then((res) => {
+              navigation.navigate('SavedRecipes', {savedRecipes: res.data.body});
+            }).catch((error) => {
+              console.log("error " + JSON.stringify(error));
+            })
+          }}>
+          <Text style={{ color: "black"}}>Saved Recipes</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => navigation.navigate('LoginScreen')}

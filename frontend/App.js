@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from "expo-font";
 import LoginScreen from './screens/LoginScreen';
-import FavoriteRecipes from './screens/FavoriteRecipes';
+import SavedRecipes from './screens/SavedRecipes';
 import AddingIngredientScreen from './screens/AddingIngredientScreen';
 import HomeScreen from './screens/HomeScreen.js';
 import IngredientListScreen from './screens/IngredientListScreen';
@@ -51,8 +51,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="FavoriteRecipes"
-          component={FavoriteRecipes}
+          name="SavedRecipes"
+          component={SavedRecipes}
           options={{ headerShown: false }}
         />
         <Stack.Screen
