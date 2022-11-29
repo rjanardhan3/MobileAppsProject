@@ -5,7 +5,6 @@ require('dotenv').config();
 const cors = require('cors')
 const {get_recipe_id, get_recipe_instructions, grab_recipe_ids_from_data, make_recipe_data_json}= require('./recipes.js')
 const MongoClient = require('mongodb').MongoClient
-const ObjectId = require('mongodb').ObjectId
 
 connectionString = process.env.DATABASE_URL
 
@@ -109,6 +108,54 @@ MongoClient.connect(connectionString, {
               res.status(200).send({
                 response: "All recipes have been successfully deleted."
               })
+            })
+            .catch(error => {
+                console.error(error)
+                res.sendStatus(500)
+            })
+    })
+
+    app.delete("/saved-recipes", (req, res) => {
+        if (!check_api_key(req, res)) {
+            return;
+        }
+
+        recipesCollection.deleteMany({})
+            .then(result => {
+              res.status(200).send({
+                response: "All recipes have been successfully deleted."
+              })
+            })
+            .catch(error => {
+                console.error(error)
+                res.sendStatus(500)
+            })
+    })
+
+    app.delete("/saved-recipe", (req, res) => {
+        if (!check_api_key(req, res)) {
+            return;
+        }
+
+        if (req.query.id == null || req.query.id.trim().length == 0 || isNaN(parseInt(req.query.id))) {
+            res.status(400).send({
+                response: "Please provide a valid id as a parameter."
+            })
+            return;
+        }
+
+        let id = parseInt(req.query.id);
+        recipesCollection.deleteOne({"id": {$eq: id}})
+            .then(result => {
+                if (result.deletedCount > 0) {
+                    res.status(200).send({
+                        response: "Recipe with id " + id + " has been deleted."
+                    })
+                } else {
+                    res.status(200).send({
+                        response: "Recipe with id " + id + " has not been found in the database."
+                    })
+                }
             })
             .catch(error => {
                 console.error(error)

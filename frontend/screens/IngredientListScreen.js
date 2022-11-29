@@ -7,27 +7,6 @@ const IngredientListScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <Item title={item.title} />
   );
-
-  const [todos, setTodos] = useState([{
-      "userId": 1,
-      "ingredientId": 1,
-      "title": "Bellpepper",
-    },
-    {
-      "userId": 2,
-      "ingredientId": 8,
-      "title": "Jalapeno",
-    },
-    {
-      "userId": 3,
-      "ingredientId": 9,
-      "title": "Lettuce",
-    },
-    {
-      "userId": 4,
-      "ingredientId": 10,
-      "title": "Apricot",
-    }])
     const Item = ({ title }) => (
       <View>
         <TouchableOpacity>
@@ -41,19 +20,12 @@ const IngredientListScreen = ({ navigation }) => {
 
     return (
       <View style={styles.container}>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Ingredient List</Text>
+        <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Ingredient</Text>
         <FlatList
             data={todos}
             renderItem={renderItem}
             keyExtractor={item => item.userId}
         />
-        <Text></Text>
-        <Text></Text>
-
       </View>
     );
 };
