@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image} from 'react-native'
 import {Camera} from 'expo-camera'
 let camera: Camera
@@ -20,6 +20,10 @@ const TakePhotoScreen = ({ navigation }) => {
       Alert.alert('Access denied')
     }
   }
+  useEffect(() => {
+    // Update the document title using the browser API
+    __startCamera()
+  });
   const __takePicture = async () => {
     const photo: any = await camera.takePictureAsync()
     console.log(photo)
