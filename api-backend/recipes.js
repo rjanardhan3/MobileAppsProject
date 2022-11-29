@@ -104,7 +104,7 @@ function get_query_string_list(ingredients) {
 
 function format_instructions(instructions) {
     if (instructions == null || instructions.length == 0) {
-        return "No instructions available for this recipe";
+        return ["No instructions available for this recipe"];
     }
 
     instructions = instructions.split(/<\S{0,}>/).join('\n').split('\n')
