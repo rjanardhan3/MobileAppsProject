@@ -10,7 +10,7 @@ module.exports = (async () => {
   }
 })
 
-//const defaultConfig = getDefaultConfig(__dirname);
+const defaultConfig = getDefaultConfig(__dirname);
 
 defaultConfig.resolver.assetExts.push("cjs");
 

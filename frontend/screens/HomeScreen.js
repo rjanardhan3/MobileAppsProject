@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
   const getSavedRecipeUrl = "https://mobileappsproject.onrender.com/saved-recipes?api_key=" + API_KEY;
   return (
 
-      
+
       <View style={styles.container}>
         <Text style={{ color: "lightgray", fontSize: 25, fontFamily: 'Cochin', marginTop:10}}>RefrigASaver</Text>
         <Image
@@ -33,14 +33,18 @@ const HomeScreen = ({ navigation }) => {
           }}>
           <Text style={{ color: "black"}}>Saved Recipes</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
-          style={styles.loginBtn}
-          onPress={() => navigation.navigate('LoginScreen')}
-        >
-          <Text style={{ color: "lightgray"}}>Go Back to Login</Text>
+          style={styles.standardBtn}
+          onPress={() => navigation.navigate('IngredientListScreen')}>
+          <Text style={{ color: "black"}}>View Current Ingredients</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.standardBtn}
+          onPress={() => navigation.navigate('RecipeMenu')}>
+          <Text style={{ color: "black"}}>View Current Recipes</Text>
+        </TouchableOpacity>
       </View>
     );
 

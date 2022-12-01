@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
+import { ImageBackground, Image, StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
 
 
 const IngredientListScreen = ({ navigation }) => {
+  const [todos, setTodos] = useState([{
+      "userId": 1,
+      "ingredientId": 1,
+      "title": "Bellpepper",
+    },
+    {
+      "userId": 2,
+      "ingredientId": 8,
+      "title": "Jalapeno",
+    },
+    {
+      "userId": 3,
+      "ingredientId": 9,
+      "title": "Lettuce",
+    },
+    {
+      "userId": 4,
+      "ingredientId": 10,
+      "title": "Apricot",
+    }])
   const [value, onChangeText] = React.useState('');
   const renderItem = ({ item }) => (
     <Item title={item.title} />
@@ -11,8 +31,7 @@ const IngredientListScreen = ({ navigation }) => {
       <View>
         <TouchableOpacity>
           <Text style={styles.todo}>
-            {title}{"\n"}
-            <Text style={styles.todoSmallText}>Quantity: 3 lbs</Text>
+            {title}
           </Text>
         </TouchableOpacity>
       </View>
@@ -20,12 +39,25 @@ const IngredientListScreen = ({ navigation }) => {
 
     return (
       <View style={styles.container}>
-        <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Ingredient</Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text style={{ color: "#05204A", fontSize: 25, fontFamily: 'Cochin'}}>Ingredients</Text>
+
         <FlatList
             data={todos}
             renderItem={renderItem}
             keyExtractor={item => item.userId}
         />
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => navigation.navigate('Home')}>
+          <Text style={{ color: "black"}}>Home</Text>
+        </TouchableOpacity>
+
+        <Text></Text>
+        <Text></Text>
       </View>
     );
 };
@@ -38,6 +70,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonImageIconStyle: {
+    height: null,
+    width: "10%",
+    alignSelf: 'center',
+    resizeMode: 'contain'
   },
   todo: {
     margin: 10,
