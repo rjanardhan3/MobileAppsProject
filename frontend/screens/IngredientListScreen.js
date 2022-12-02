@@ -6,22 +6,7 @@ const IngredientListScreen = ({ navigation }) => {
   const [todos, setTodos] = useState([{
       "userId": 1,
       "ingredientId": 1,
-      "title": "Bellpepper",
-    },
-    {
-      "userId": 2,
-      "ingredientId": 8,
-      "title": "Jalapeno",
-    },
-    {
-      "userId": 3,
-      "ingredientId": 9,
-      "title": "Lettuce",
-    },
-    {
-      "userId": 4,
-      "ingredientId": 10,
-      "title": "Apricot",
+      "title": "Tomato",
     }])
   const [addIngredient, setAddIngredient] = React.useState('');
   const [value, onChangeText] = React.useState('');

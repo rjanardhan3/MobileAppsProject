@@ -70,7 +70,7 @@ export default function App() {
           component={RecipeInstructions}
           options={{ headerShown: false }}
         />
-        
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -8,8 +8,6 @@ import {API_KEY} from '@env'
 const HomeScreen = ({ navigation }) => {
   const getSavedRecipeUrl = "https://mobileappsproject.onrender.com/saved-recipes?api_key=" + API_KEY;
   return (
-
-
       <View style={styles.container}>
         <Text style={{ color: "lightgray", fontSize: 25, fontFamily: 'Cochin', marginTop:10}}>RefrigASaver</Text>
         <Image
