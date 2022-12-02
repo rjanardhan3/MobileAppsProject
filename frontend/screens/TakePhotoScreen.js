@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image} from 'react-native'
 import {Camera} from 'expo-camera'
 
+
 //import { fetch, bundleResourceIO } from '@tensorflow/tfjs-react-native'
 //import * as tf from '@tensorflow/tfjs'
 let camera: Camera
@@ -28,13 +29,14 @@ const TakePhotoScreen = ({ navigation }) => {
     __startCamera()
     /*
     async function loadModel() {
-      const tfReady = await tf.ready()
-      const model = await require("./assets/model.json");
-      //const modelWeight = await require("./assets/group1shard.bin");
-      //const det = await tf.loadLayersModel(model, modelWeight)
+      //const tfReady = await tf.ready()
+      //const model = await require("./assets/model.json");
+      const modelWeight = await require("frontend/screens/assets/group1shard.bin");
+      const det = await tf.loadLayersModel(model, modelWeight)
       console.log("asdfadsf")
     }
     */
+
 
   });
   const __takePicture = async () => {
